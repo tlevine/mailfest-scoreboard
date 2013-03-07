@@ -24,3 +24,25 @@ things to the mailfest scoreboard.
 Specify the IMAP server credentials, and then run `./scoreboard`.
 
 ## Statistics
+The following features are extracted from each email.
+
+* `From` field
+* Date
+* Size of email, ignoring attachments
+* Size of the `Subject`
+* Number of attachments
+* Number of recipients in the `To` field
+* Number of recipients in the `Cc` field
+* Whether the title starts with "Re:"
+* Whether the title starts with "Fwd:"
+* Whether it was sent from a Google Mail server
+
+Whenever "size" is mentioned, both of the following metrics are collected.
+
+* Number of characters
+* Number of words
+
+To be clear: The name and email address of the person who sent the email
+will be recorded so that we can report things like the number of emails that
+each person sent. Aside from this feature, the features shouldn't be able to
+reveal much private information.
