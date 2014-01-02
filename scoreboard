@@ -9,12 +9,22 @@ from email import message_from_string
 
 import feed
 import stats
+from headers import headers
 
 def read_email(email:str) -> dict:
     'Compute all the statistics.'
     parsed_email = message_from_string(email)
+    features = {}
+
+    # Headers
+    features.update(headers(parsed_email))
+
+    # Statistics
     stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
-    return {stat: getattr(stats, stat)(parsed_email) for stat in stat_names}
+    features.update({stat: getattr(stat_module, stat)(parsed_email) \
+        for stat in stat_names})
+
+    return features
 
 def credentials() -> Dict[str,str]:
     'Get the email account credentials.'
@@ -35,6 +45,7 @@ def main():
             sleep(10)
         else:
             email_stats = read_email(email)
+            print(email_stats)
             # M.delete(num)
 
 if __name__== '__main__':
