@@ -36,6 +36,7 @@ class Mailbox:
 
         # Read the first one if it's available.
         if nums == []:
+            pass
         else:
             typ, data = M.fetch(nums[0], '(RFC822)')
-            print 'Message %s\n%s\n' % (num, data[0][1])
+            print('Message %s\n%s\n' % (num, data[0][1]))

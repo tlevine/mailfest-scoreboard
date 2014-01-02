@@ -2,9 +2,15 @@
 import sys, os
 import getpass
 
+import feed
+import stats
+
 CREDENTIALS = {
     'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
     'address': os.environ.get('MAILFEST_ADDRESS', 'mailfest@thomaslevine.com'),
 }
 CREDENTIALS['password'] = os.environ.get('MAILFEST_PASSWORD',
      getpass.getpass('Password for %s:' % CREDENTIALS['address']))
+
+for stat in filter(lambda x: not x.startswith('_'), dir(stats)):
+    print(getattr(stats, stat)(None))
