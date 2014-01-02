@@ -17,10 +17,10 @@ class Mailbox:
 
         # Molly guard
         if self.address != 'mailfest@thomaslevine.com':
-            result = raw_input('Warning: Everything in %s will be deleted. Continue? (Type "yes".)')
+            result = input('Warning: Everything in %s will be deleted. Continue? (Type "yes".)')
             if result != 'yes':
                 self.close()
-                exit(1)
+                raise UserWarning('Wiping the account was aborted.')
 
         # Delete everything
         typ, data = self.M.search(None, 'ALL')
