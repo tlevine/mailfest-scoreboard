@@ -35,15 +35,16 @@ def body_lines(email) -> int:
     'Number of lines in the body'
     return _ilen(filter(lambda x: x == '\n', _body(email)))
 
-'''
+def _n_at_signs(string):
+    return _ilen(filter(lambda x: x == '@', string))
+
 def to_addresses(email) -> int:
     'Number of addresses in the "To:" field'
-    return len(email.get_all('to'))
+    return _n_at_signs(email['to'])
 
 def cc_addresses(email) -> int:
     'Number of addresses in the "CC:" field'
-    return len(email.get_all('cc'))
-'''
+    return _n_at_signs(email.get('cc', ''))
 
 def hops(email) -> int:
     'Number of "Received" headers in the email'
@@ -66,8 +67,8 @@ def gmail(email) -> bool:
     '''
     return 'google.com ' in email.get_all('received')[-1]
 
-def attachments(email) -> int:
-    'Number of attachments'
+def binary_attachments(email) -> int:
+    'Number of non-text attachments'
     msgs = _payload(email)
     def is_attachment(msg) -> bool:
         return None == _re.match(r'^text/.*$', msg.get_content_type())
