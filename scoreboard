@@ -8,10 +8,14 @@ import stats
 CREDENTIALS = {
     'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
     'address': os.environ.get('MAILFEST_ADDRESS', 'mailfest@thomaslevine.com'),
+    'password': os.environ.get('MAILFEST_PASSWORD'),
 }
-CREDENTIALS['password'] = os.environ.get('MAILFEST_PASSWORD',
-     getpass.getpass('Password for %s:' % CREDENTIALS['address']))
+if not CREDENTIALS['password']:
+     CREDENTIALS['password'] = getpass.getpass('Password for %s:' % CREDENTIALS['address'])
 
+feed.Mailbox(**CREDENTIALS)
+
+exit()
 
 email = None
 stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
