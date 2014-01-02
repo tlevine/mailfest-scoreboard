@@ -40,7 +40,7 @@ def _n_at_signs(string):
 
 def to_addresses(email) -> int:
     'Number of addresses in the "To:" field'
-    return _n_at_signs(email['to'])
+    return _n_at_signs(email.get('to', ''))
 
 def cc_addresses(email) -> int:
     'Number of addresses in the "CC:" field'
