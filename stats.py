@@ -47,3 +47,10 @@ def subject_fwd(email) -> bool:
     'Whether the subject indicates a forward (starts with /^fwd:/)'
     subject = email.get('subject')
     return _re.match(r'^fwd:.*$', subject, flags = _re.IGNORECASE) != None
+
+def gmail(email) -> bool:
+    '''
+    Whether the email was sent from a Gmail address
+    (whether the earliest/lowest "Received:" header includes "google.com ")
+    '''
+    return 'google.com ' in email.get_all('received')[-1]
