@@ -13,7 +13,8 @@ CREDENTIALS = {
 if not CREDENTIALS['password']:
      CREDENTIALS['password'] = getpass.getpass('Password for %s:' % CREDENTIALS['address'])
 
-feed.Mailbox(**CREDENTIALS)
+M = feed.Mailbox(**CREDENTIALS)
+print(M.peek())
 
 exit()
 

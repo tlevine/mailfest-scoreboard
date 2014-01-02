@@ -8,8 +8,8 @@ class Mailbox:
         self.M.select('INBOX')
 
     def close(self):
-        M.close()
-        M.logout()
+        self.M.close()
+        self.M.logout()
 
     def wipe(self):
         'Delete all emails in the account.'
@@ -38,9 +38,7 @@ class Mailbox:
         nums = data[0].split()
 
         # Read the first one if it's available.
-        if nums == []:
-            pass
-        else:
-            typ, data = M.fetch(nums[0], '(RFC822)')
-            print(data)
-            print('Message %s\n%s\n' % (num, data[0][1]))
+        if nums != []:
+            num = nums[0]
+            typ, data = self.M.fetch(num, '(RFC822)')
+            return data[0][1]
