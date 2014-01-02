@@ -35,8 +35,6 @@ def main():
             sleep(10)
         else:
             email_stats = read_email(email)
-            print(type(num), type(email))
-
             # M.delete(num)
 
 if __name__== '__main__':
