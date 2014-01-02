@@ -41,9 +41,9 @@ def hops(email) -> int:
 def subject_re(email) -> bool:
     'Whether the subject indicates a reply (starts with /^re:/)'
     subject = email.get('subject')
-    _re.match(r'^re:.*$', subject, flags = _re.IGNORECASE) != None
+    return _re.match(r'^re:.*$', subject, flags = _re.IGNORECASE) != None
 
 def subject_fwd(email) -> bool:
     'Whether the subject indicates a forward (starts with /^fwd:/)'
     subject = email.get('subject')
-    _re.match(r'^fwd:.*$', subject, flags = _re.IGNORECASE) != None
+    return _re.match(r'^fwd:.*$', subject, flags = _re.IGNORECASE) != None
