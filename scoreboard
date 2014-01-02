@@ -1,24 +1,36 @@
 #!/usr/bin/env python3
 import sys, os
 import getpass
+from time import sleep
 
 import feed
 import stats
 
-CREDENTIALS = {
-    'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
-    'address': os.environ.get('MAILFEST_ADDRESS', 'mailfest@thomaslevine.com'),
-    'password': os.environ.get('MAILFEST_PASSWORD'),
-}
-if not CREDENTIALS['password']:
-     CREDENTIALS['password'] = getpass.getpass('Password for %s:' % CREDENTIALS['address'])
+def read_email(email):
+    'Compute all the statistics.'
+    stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
+    return {stat: getattr(stats, stat)(email) for stat in stat_names}
 
-M = feed.Mailbox(**CREDENTIALS)
-print(M.peek())
+def credentials():
+    'Get the email account credentials.'
+    c = {
+        'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
+        'address': os.environ.get('MAILFEST_ADDRESS', 'mailfest@thomaslevine.com'),
+        'password': os.environ.get('MAILFEST_PASSWORD'),
+    }
+    if not c['password']:
+         c['password'] = getpass.getpass('Password for %s:' % c['address'])
+    return c
 
-exit()
+def main():
+    M = feed.Mailbox(**credentials())
+    while True:
+        email = M.peek()
+        if email == None:
+            sleep(10)
+        else:
+            email_stats = read_email(email)
+            print(email_stats)
 
-email = None
-stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
-email_stats = {stat: getattr(stats, stat)(email) for stat in stat_names}
-print(email_stats)
+if __name__== '__main__':
+    main()
