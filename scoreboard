@@ -26,12 +26,12 @@ def main():
     M = feed.Mailbox(**credentials())
     while True:
         num, email = M.peek()
-        print(num)
-        if email == None:
+        if num == None:
             sleep(10)
         else:
             email_stats = read_email(email)
             print(email_stats)
+            print(num)
 
 if __name__== '__main__':
     main()

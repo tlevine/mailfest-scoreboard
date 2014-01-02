@@ -43,4 +43,4 @@ class Mailbox:
         else:
             num = nums[0]
             typ, data = self.M.fetch(num, '(RFC822)')
-            return 'aoeu', data[0][1]
+            return num, data[0][1]
