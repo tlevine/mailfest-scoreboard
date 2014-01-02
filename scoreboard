@@ -46,7 +46,7 @@ def main():
         else:
             email_stats = read_email(email)
             print(email_stats)
-            # M.delete(num)
+        #   M.delete(num)
         break
 
 if __name__== '__main__':
