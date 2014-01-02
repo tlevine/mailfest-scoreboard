@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
+from typing import Dict
+
 import sys, os
 import getpass
 from time import sleep
+
+from email import message_from_string
 
 import feed
 import stats
 
 def read_email(email:str) -> dict:
     'Compute all the statistics.'
+    parsed_email = message_from_string(email)
     stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
-    return {stat: getattr(stats, stat)(email) for stat in stat_names}
+    return {stat: getattr(stats, stat)(parsed_email) for stat in stat_names}
 
 def credentials() -> Dict[str,str]:
     'Get the email account credentials.'
@@ -30,8 +35,9 @@ def main():
             sleep(10)
         else:
             email_stats = read_email(email)
-            print(email_stats)
-            print(num)
+            print(type(num), type(email))
+
+            # M.delete(num)
 
 if __name__== '__main__':
     main()
