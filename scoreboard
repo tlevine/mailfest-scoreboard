@@ -21,8 +21,8 @@ def read_email(email:str) -> dict:
 
     # Statistics
     stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
-    features.update({stat: getattr(stat_module, stat)(parsed_email) \
-        for stat in stat_names})
+    features.update({stat_name: getattr(stats, stat_name)(parsed_email) \
+        for stat_name in stat_names})
 
     return features
 
@@ -47,6 +47,7 @@ def main():
             email_stats = read_email(email)
             print(email_stats)
             # M.delete(num)
+        break
 
 if __name__== '__main__':
     main()
