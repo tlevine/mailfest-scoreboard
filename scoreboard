@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import sys, os
+import getpass
 
 CREDENTIALS = {
-    'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net')
+    'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
     'address': os.environ.get('MAILFEST_ADDRESS', 'mailfest@thomaslevine.com'),
-    'password': os.environ['MAILFEST_PASSWORD'],
 }
+CREDENTIALS['password'] = os.environ.get('MAILFEST_PASSWORD',
+     getpass.getpass('Password for %s:' % CREDENTIALS['address']))
