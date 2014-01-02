@@ -22,13 +22,15 @@ things to the mailfest scoreboard.
 
 ## Install
 Specify the IMAP server credentials, and then run `./scoreboard`.
+As emails come in, statistics are printed to stdout in CSV format.
 
 ## Statistics
 The following features are extracted from each email.
 
 * `From` field
 * Date
-* Size of email, ignoring attachments
+* Size in bytes of email, ignoring attachments
+* Size of the email body
 * Size of the `Subject`
 * Number of attachments
 * Number of recipients in the `To` field
@@ -37,7 +39,7 @@ The following features are extracted from each email.
 * Whether the title starts with "Fwd:"
 * Whether it was sent from a Google Mail server
 
-Whenever "size" is mentioned, both of the following metrics are collected.
+Whenever "size" (not "in bytes") is mentioned, both of the following metrics are collected.
 
 * Number of characters
 * Number of words
