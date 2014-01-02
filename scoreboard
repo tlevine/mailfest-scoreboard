@@ -6,12 +6,12 @@ from time import sleep
 import feed
 import stats
 
-def read_email(email):
+def read_email(email:str) -> dict:
     'Compute all the statistics.'
     stat_names = filter(lambda x: not x.startswith('_'), dir(stats))
     return {stat: getattr(stats, stat)(email) for stat in stat_names}
 
-def credentials():
+def credentials() -> Dict[str,str]:
     'Get the email account credentials.'
     c = {
         'host': os.environ.get('MAILFEST_IMAP_HOST', 'mail.gandi.net'),
@@ -25,7 +25,8 @@ def credentials():
 def main():
     M = feed.Mailbox(**credentials())
     while True:
-        email = M.peek()
+        num, email = M.peek()
+        print(num)
         if email == None:
             sleep(10)
         else:

@@ -1,7 +1,7 @@
 import imaplib
 
 class Mailbox:
-    def __init__(self, host, address, password):
+    def __init__(self, host:str, address:str, password:str):
         self.address = address
         self.M = imaplib.IMAP4_SSL(host)
         self.M.login(address, password)
@@ -21,24 +21,26 @@ class Mailbox:
                 self.close()
                 exit(1)
 
-        # Delete everythin
+        # Delete everything
         typ, data = self.M.search(None, 'ALL')
         for num in data[0].split():
            self.M.store(num, '+FLAGS', '\\Deleted')
         self.M.expunge()
 
-    def delete(self, num):
+    def delete(self, num:int) -> None:
         'Delete the email with a particular number.'
         self.M.store(num, '+FLAGS', '\\Deleted')
         self.M.expunge()
 
-    def peek(self):
+    def peek(self) -> Tuple[int,str]:
         'Look at an arbitrary email.'
         typ, data = self.M.search(None, 'ALL')
         nums = data[0].split()
 
         # Read the first one if it's available.
-        if nums != []:
+        if nums == []:
+            return None, None
+        else:
             num = nums[0]
             typ, data = self.M.fetch(num, '(RFC822)')
-            return data[0][1]
+            return 'aoeu', data[0][1]
