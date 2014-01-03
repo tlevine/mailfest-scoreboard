@@ -30,3 +30,27 @@ def test_payload():
     n.assert_not_is_instance(payload, builtins.str)
     for bomb in payload:
         n.assert_is_instance(bomb, Message)
+
+def test_n_at_signs():
+    addresses = '_@thomaslevine.com, "Thomas Levine" <occurrence@thomaslevine.com>'
+    n.assert_equal(stats._n_at_signs(addresses), 2)
+
+@n.nottest
+def test_to_addresses(email):
+    pass
+
+@n.nottest
+def test_cc_addresses(email):
+    pass
+
+@n.nottest
+def test_body_lines():
+    pass
+
+@n.nottest
+def test_body_characters():
+    pass
+
+@n.nottest
+def test_body_words():
+    pass
