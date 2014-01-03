@@ -33,7 +33,7 @@ class Mailbox:
         self.M.store(num, '+FLAGS', '\\Deleted')
         self.M.expunge()
 
-    def peek(self) -> Tuple[bytes,str]:
+    def peek(self) -> Tuple[bytes,bytes]:
         'Look at an arbitrary email.'
         typ, data = self.M.search(None, 'ALL')
         nums = data[0].split()
@@ -46,4 +46,4 @@ class Mailbox:
             typ, data = self.M.fetch(num, '(RFC822)')
 
             # Email is ASCII http://en.wikipedia.org/wiki/MIME
-            return num, data[0][1].decode('ascii')
+            return num, data[0][1]
