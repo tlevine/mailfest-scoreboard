@@ -25,7 +25,7 @@ def test_ilen():
 def test_body():
     n.assert_is_instance(stats._body(email), str)
 
-def test_body():
+def test_payload():
     payload = stats._payload(email)
     n.assert_not_is_instance(payload, builtins.str)
     for bomb in payload:
