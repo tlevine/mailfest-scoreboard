@@ -1,0 +1,4 @@
+dist
+MANIFEST
+mailfest_scoreboard.egg-info
+*.pyc
