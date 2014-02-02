@@ -7,7 +7,6 @@ Or None.
 import builtins as _builtins
 import re as _re
 from io import StringIO as _StringIO
-from tokenize import generate_tokens as _generate_tokens
 
 def _body(email) -> str:
     return _payload(email)[0].get_payload()
@@ -29,14 +28,15 @@ def body_characters(email) -> int:
 
 def body_words(email) -> int:
     'Number of words in the body text'
-    return _ilen(_generate_tokens(_StringIO(_body(email)).readline))
+    text = ' '.join(filter(lambda line: not line.startswith('>'), _body(email).split('\n')))
+    return _ilen(filter(None, _re.split(' +', text)))
 
 def body_lines(email) -> int:
     'Number of lines in the body'
-    return _ilen(filter(lambda x: x == '\n', _body(email)))
+    return _body(email).count('\n')
 
 def _n_at_signs(string):
-    return _ilen(filter(lambda x: x == '@', string))
+    return string.count('@')
 
 def to_addresses(email) -> int:
     'Number of addresses in the "To:" field'
