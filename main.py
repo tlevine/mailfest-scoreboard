@@ -69,5 +69,5 @@ def main():
             else:
                 email_stats = read_email(email)
                 w = csv.DictWriter(results, fields)
-                w.writerow(json.dumps(email_stats) + '\n')
+                w.writerow(email_stats)
                 M.delete(num)
