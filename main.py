@@ -1,5 +1,6 @@
 from typing import Dict
 
+import json
 import sys, os
 import getpass
 from time import sleep
@@ -39,11 +40,11 @@ def credentials() -> Dict[str,str]:
 def main():
     M = feed.Mailbox(**credentials())
     while True:
-        num, email = M.peek()
-        if num == None:
-            sleep(10)
-        else:
-            email_stats = read_email(email)
-            print(email_stats)
-        #   M.delete(num)
-        break
+        with open('mailfest.jsonlines', 'a') as results:
+            num, email = M.peek()
+            if num == None:
+                sleep(10)
+            else:
+                email_stats = read_email(email)
+                results.write(json.dumps(email_stats) + '\n')
+                M.delete(num)
